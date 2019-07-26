@@ -1,0 +1,110 @@
+html, body {
+    max-width: 100%;
+    height: 100%;
+    margin: 0;
+  }
+  .principal {
+    min-height: 100%;
+    margin-bottom: -50px;
+  }
+
+img{
+    max-width: 100%!important;
+}
+
+  .footer,
+.push {
+  height: 50px;
+}
+
+#imgimg{
+    min-height: 20rem;
+    max-height: 25rem;
+}
+.m-top-3r{
+    margin-top:3rem;
+}
+
+.m-bottom-3r{
+    margin-bottom: 3rem;
+}
+
+.m-left-3r{
+    margin-left: 3rem;
+}
+
+.m-right-3r{
+    margin-right: 3rem;
+}
+
+.p-1r{
+    padding:1rem;
+}
+
+.padding-0{
+    padding: 0;
+}
+
+.step-by div:first-of-type{
+    border-top-left-radius: 0.7rem;
+}
+
+.step-by div:last-of-type{
+    border-top-right-radius: 0.7rem;
+}
+
+nav a h1,nav a p{
+    color:white;
+}
+
+.bg_gris_claro_1{
+    background-color:rgb(221, 221, 221);
+}
+
+.remk{
+    cursor:pointer;
+}
+
+
+
+
+
+/*img {
+    max-width: 100%; 
+  }*/
+  
+  #canvas {
+    height: 25rem;
+    width: 25rem;
+    background-color: #ffffff;
+    cursor: default;
+    border: 1px solid black;
+  }
+
+
+  #result{
+      padding-left:2rem;
+  }
+
+  @media (min-width: 468px){
+      #result{
+          padding-top:2rem;
+      }
+  }
+
+
+  #map{
+      height:30rem;
+  }
+
+  @media (min-width: 468px){
+    #map{
+        width:100%;
+    }
+}
+/*
+.contenido{
+    min-height:20rem;
+}*/
+
+
