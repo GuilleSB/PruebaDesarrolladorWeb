@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Lista de coordenadas</title>
+    <link rel="stylesheet" href="css/bootstrap.min.css" />
+    <link rel="stylesheet" href="css/mis-estilos.css" />
+  </head>
+  <body onload="initMap();cargarInicial();">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-sm-12 col-md-3">
+          <div class="row">
+            <div class="col-12 form-group">
+              <label for="latitud" class="form-label">Latitud</label>
+              <input type="text" class="form-control" id="latitud" />
+            </div>
+
+            <div class="col-12 form-group">
+              <label for="longitud form-label">Longitud</label>
+              <input type="text" class="form-control" id="longitud" />
+            </div>
+
+            <div class="col-12">
+              <button class="btn btn-primary" onclick="addCoord()">
+                Añadir coordenadas
+              </button>
+              <hr />
+            </div>
+
+            <script>
+              var coordenadas = [
+                { lat: 10.0172218, lng: -84.212439 },
+                { lat: 9.9328266, lng: -84.0879134 },
+                { lat: 9.9785926, lng: -84.8397306 },
+                { lat: 9.9923145, lng: -83.0357 },
+                { lat: 9.8572523, lng: -83.9145017 }
+              ];
+              var contador = 0;
+              function cargarInicial() {
+                for (var i = 0; i < coordenadas.length; i++) {
+                  contador += 1;
+                  $("#add-coord-his").append(
+                    "<tr class='rowchild'><th scope='row'>" +
+                      contador +
+                      "</th><td>" +
+                      coordenadas[i].lat +
+                      "</td><td>" +
+                      coordenadas[i].lng +
+                      "</td></tr>"
+                  );
+                }
+                contador = 0;
+              }
+              function addCoord() {
+                let latitud = parseFloat($("#latitud").val());
+                let longitud = parseFloat($("#longitud").val());
+
+                coordenadas.push({ lat: latitud, lng: longitud });
+
+                $(".rowchild").remove();
+
+                for (var i = 0; i < coordenadas.length; i++) {
+                  contador += 1;
+                  $("#add-coord-his").append(
+                    "<tr class='rowchild'><th scope='row'>" +
+                      contador +
+                      "</th><td>" +
+                      coordenadas[i].lat +
+                      "</td><td>" +
+                      coordenadas[i].lng +
+                      "</td></tr>"
+                  );
+                }
+                contador = 0;
+                $("#latitud").val("");
+                $("#longitud").val("");
+              }
+            </script>
+
+            <div class="col-12">
+              <table class="table-bordered">
+                <thead>
+                  <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Longitud</th>
+                    <th scope="col">Latitud</th>
+                  </tr>
+                </thead>
+                <tbody id="add-coord-his"></tbody>
+              </table>
+              <br />
+            </div>
+            <div class="col-12">
+              <button
+                class="btn btn-success"
+                style="margin-bottom: 10px;"
+                onclick="initMap(coordenadas)"
+              >
+                Cargar en mapa
+              </button>
+
+              <script>
+                var marker;
+                function initMap(coords) {
+                  var map = new google.maps.Map(
+                    document.getElementById("map"),
+                    {
+                      center: { lat: 9.9328266, lng: -84.0879134 },
+                      zoom: 8
+                    }
+                  );
+
+                  if (!coords) {
+                    return;
+                  }
+                  for (var i = 0; i < coords.length; i++) {
+                    addMarker(coords[i]);
+                  }
+
+                  function addMarker(location) {
+                    marker = new google.maps.Marker({
+                      position: location,
+                      map: map
+                    });
+                  }
+                }
+              </script>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-sm-12 col-md-9" id="map"></div>
+      </div>
+    </div>
+
+    <script src="js/jquery/jquery.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDgY8N_dv7KrdodxJRwGiftY5YuSRFwWDg&libraries=places"
+      async
+      defer
+    ></script>
+  </body>
+</html>
