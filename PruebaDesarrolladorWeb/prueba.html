@@ -7,14 +7,18 @@
     <link rel="stylesheet" href="css/bootstrap.min.css" />
     <link rel="stylesheet" href="css/mis-estilos.css" />
   </head>
-  <body onload="initMap();cargarInicial();">
+  <body onload="initMap();cargarInicial();initMap(coordenadas);">
     <div class="container-fluid">
       <div class="row">
-        <div class="col-sm-12 col-md-3">
+        <div class="col-sm-12 col-md-4">
           <div class="row">
-              <div class="col-12">
-                  <h4>Ingrese coordenadas geograficas</h4>
-              </div>
+            <div class="col-12">
+              <h4>Ingrese coordenadas geograficas</h4>
+            </div>
+            <div class="col-12 form-group">
+              <label for="descripcion" class="form-label">Descripcion</label>
+              <input type="text" class="form-control" id="descripcion" />
+            </div>
             <div class="col-12 form-group">
               <label for="latitud" class="form-label">Latitud</label>
               <input type="text" class="form-control" id="latitud" />
@@ -27,18 +31,38 @@
 
             <div class="col-12">
               <button class="btn btn-primary" onclick="addCoord()">
-                Añadir coordenadas
+                Añadir a tabla de coordenadas
               </button>
               <hr />
             </div>
 
             <script>
               var coordenadas = [
-                { lat: 10.0172218, lng: -84.212439 },
-                { lat: 9.9328266, lng: -84.0879134 },
-                { lat: 9.9785926, lng: -84.8397306 },
-                { lat: 9.9923145, lng: -83.0357 },
-                { lat: 9.8572523, lng: -83.9145017 }
+                {
+                  nombre: "Municipalidad de Alajuela",
+                  lat: 10.0172218,
+                  lng: -84.212439
+                },
+                {
+                  nombre: "Junta de Protección Social",
+                  lat: 9.9328266,
+                  lng: -84.0879134
+                },
+                {
+                  nombre: "Centro de Puntarenas",
+                  lat: 9.9785926,
+                  lng: -84.8397306
+                },
+                {
+                  nombre: "Municipalidad de Limón",
+                  lat: 9.9923145,
+                  lng: -83.0357
+                },
+                {
+                  nombre: "TEC, sede Cartago",
+                  lat: 9.8572523,
+                  lng: -83.9145017
+                }
               ];
               var contador = 0;
               function cargarInicial() {
@@ -48,9 +72,10 @@
                     "<tr class='rowchild'><th scope='row'>" +
                       contador +
                       "</th><td>" +
-                      coordenadas[i].lat +
+                      coordenadas[i].nombre +
                       "</td><td>" +
-                      coordenadas[i].lng +
+                      coordenadas[i].lng + " , " +
+                      coordenadas[i].lat +
                       "</td></tr>"
                   );
                 }
@@ -59,8 +84,12 @@
               function addCoord() {
                 let latitud = parseFloat($("#latitud").val());
                 let longitud = parseFloat($("#longitud").val());
-
-                coordenadas.push({ lat: latitud, lng: longitud });
+                let descripcion = $("#descripcion").val();
+                coordenadas.push({
+                  nombre: descripcion,
+                  lat: latitud,
+                  lng: longitud
+                });
 
                 $(".rowchild").remove();
 
@@ -70,9 +99,10 @@
                     "<tr class='rowchild'><th scope='row'>" +
                       contador +
                       "</th><td>" +
-                      coordenadas[i].lat +
+                      coordenadas[i].nombre +
                       "</td><td>" +
-                      coordenadas[i].lng +
+                      coordenadas[i].lng + " , " +
+                      coordenadas[i].lat +
                       "</td></tr>"
                   );
                 }
@@ -83,13 +113,13 @@
             </script>
 
             <div class="col-12">
-                <h4>Tabla de coordenadas</h4>
+              <h4>Tabla de coordenadas</h4>
               <table class="table-bordered">
                 <thead>
                   <tr>
                     <th scope="col">#</th>
-                    <th scope="col">Longitud</th>
-                    <th scope="col">Latitud</th>
+                    <th scope="col">Descripcion</th>
+                    <th scope="col">Coordenadas</th>
                   </tr>
                 </thead>
                 <tbody id="add-coord-his"></tbody>
@@ -102,7 +132,7 @@
                 style="margin-bottom: 10px;"
                 onclick="initMap(coordenadas)"
               >
-                Cargar coordenadas en mapa
+                Cargar tabla de coordenadas en mapa
               </button>
 
               <script>
@@ -120,13 +150,17 @@
                     return;
                   }
                   for (var i = 0; i < coords.length; i++) {
-                    addMarker(coords[i]);
+                    addMarker(
+                      { lat: coords[i].lat, lng: coords[i].lng },
+                      coords[i].nombre
+                    );
                   }
 
-                  function addMarker(location) {
+                  function addMarker(location, nombre) {
                     marker = new google.maps.Marker({
                       position: location,
-                      map: map
+                      map: map,
+                      title: nombre
                     });
                   }
                 }
@@ -135,7 +169,12 @@
           </div>
         </div>
 
-        <div class="col-sm-12 col-md-9" id="map"></div>
+        <div class="col-sm-12 col-md-8">
+          <h4>Mapa de instituciones JPS</h4>
+          <div id="map">
+
+          </div>
+        </div>
       </div>
     </div>
 
